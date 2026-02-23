@@ -906,6 +906,74 @@ function loadProfilePage() {
                 }
             });
         });
+        
+        // Add change username button listeners
+        document.querySelectorAll('.change-username-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const oldUsername = this.dataset.username;
+                const newUsernameInput = this.parentElement.querySelector('.new-username-input');
+                const newUsername = newUsernameInput.value.trim();
+                
+                if (!newUsername) {
+                    alert('请输入新用户名');
+                    return;
+                }
+                
+                if (newUsername === oldUsername) {
+                    alert('新用户名不能与旧用户名相同');
+                    return;
+                }
+                
+                // Check if new username already exists
+                const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+                if (users.some(u => u.username === newUsername)) {
+                    alert('新用户名已被使用，请选择其他用户名');
+                    return;
+                }
+                
+                if (confirm(`确认要将用户名从 "${oldUsername}" 改为 "${newUsername}" 吗？`)) {
+                    changeUsername(oldUsername, newUsername);
+                    loadProfilePage(); // Refresh page
+                }
+            });
+        });
+        
+        // Add change password button listeners
+        document.querySelectorAll('.change-password-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const username = this.dataset.username;
+                const newPasswordInput = this.parentElement.querySelector('.new-password-input');
+                const newPassword = newPasswordInput.value.trim();
+                
+                if (!newPassword) {
+                    alert('请输入新密码');
+                    return;
+                }
+                
+                if (newPassword.length < 3) {
+                    alert('密码长度至少3个字符');
+                    return;
+                }
+                
+                if (confirm(`确认要修改用户 "${username}" 的密码吗？`)) {
+                    changePassword(username, newPassword);
+                    newPasswordInput.value = '';
+                    alert('密码已修改');
+                    loadProfilePage(); // Refresh page
+                }
+            });
+        });
+        
+        // Add delete account button listeners
+        document.querySelectorAll('.delete-account-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const username = this.dataset.username;
+                if (confirm(`确认要删除用户 "${username}" 的账户吗？此操作无法撤销。`)) {
+                    deleteUser(username);
+                    loadProfilePage(); // Refresh page
+                }
+            });
+        });
     }
 }
 
@@ -913,8 +981,53 @@ function getAdminPanel() {
     const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
     const assignments = JSON.parse(localStorage.getItem('userTeamAssignments') || '{}');
     
-    // Batch assignment section
+    // User account management section
     let html = `
+        <div class="profile-admin-panel">
+            <div class="admin-panel-header">
+                <h3>👤 管理员面板 - 用户账户管理</h3>
+                <button class="collapsible-btn collapsed" data-target="user-accounts-content">▼</button>
+            </div>
+            <div id="user-accounts-content" class="batch-assignment-content collapsed">
+                <div class="admin-accounts-list">
+    `;
+    
+    users.forEach(user => {
+        html += `
+            <div class="admin-account-item" style="border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; background-color: #f9f9f9;">
+                <h4>用户：${user.username}</h4>
+                <div class="account-management" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label>修改用户名</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" class="new-username-input" data-username="${user.username}" placeholder="新用户名" style="flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+                            <button class="change-username-btn" data-username="${user.username}" style="padding: 0.5rem 1rem; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">修改</button>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <label>修改密码</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="password" class="new-password-input" data-username="${user.username}" placeholder="新密码" style="flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+                            <button class="change-password-btn" data-username="${user.username}" style="padding: 0.5rem 1rem; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">修改</button>
+                        </div>
+                    </div>
+                    <div style="min-width: 200px;">
+                        <label>删除账户</label>
+                        <button class="delete-account-btn" data-username="${user.username}" style="width: 100%; padding: 0.5rem; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">删除</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += `
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Batch assignment section
+    html += `
         <div class="profile-admin-panel">
             <div class="admin-panel-header">
                 <h3>⚙️ 管理员面板 - 批量分配队伍</h3>
@@ -1111,6 +1224,58 @@ function deleteSurvey(teamNum) {
         delete prescoutingData[teamNum];
         savePrescoutingData();
     }
+}
+
+function changeUsername(oldUsername, newUsername) {
+    // Update in registered users
+    let users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    users = users.map(u => {
+        if (u.username === oldUsername) {
+            return { ...u, username: newUsername };
+        }
+        return u;
+    });
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
+    
+    // Update user team assignments
+    const assignments = JSON.parse(localStorage.getItem('userTeamAssignments') || '{}');
+    if (assignments[oldUsername]) {
+        assignments[newUsername] = assignments[oldUsername];
+        delete assignments[oldUsername];
+        localStorage.setItem('userTeamAssignments', JSON.stringify(assignments));
+    }
+    
+    // Update prescoutingData - change createdBy and lastEditedBy
+    Object.values(prescoutingData).forEach(data => {
+        if (data.createdBy === oldUsername) {
+            data.createdBy = newUsername;
+        }
+        if (data.lastEditedBy === oldUsername) {
+            data.lastEditedBy = newUsername;
+        }
+    });
+    savePrescoutingData();
+    
+    // Update current user if they are the one being renamed
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (currentUser.username === oldUsername) {
+        currentUser.username = newUsername;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+    
+    alert(`用户名已成功从 "${oldUsername}" 改为 "${newUsername}"`);
+}
+
+function changePassword(username, newPassword) {
+    // Update in registered users
+    let users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    users = users.map(u => {
+        if (u.username === username) {
+            return { ...u, password: newPassword };
+        }
+        return u;
+    });
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
 }
 
 function savePrescoutingData() {
