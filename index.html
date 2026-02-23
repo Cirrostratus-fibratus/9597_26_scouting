@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>26 Scouting - 侦察队伍</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-container">
+            <div class="login-box">
+                <h2 id="modalTitle">26 Scouting 登录</h2>
+                
+                <!-- Login Form -->
+                <form id="loginForm" class="login-form-section">
+                    <div class="login-form-group">
+                        <label for="username">用户名</label>
+                        <input type="text" id="username" name="username" required placeholder="输入用户名">
+                    </div>
+                    <div class="login-form-group">
+                        <label for="password">密码</label>
+                        <input type="password" id="password" name="password" required placeholder="输入密码">
+                    </div>
+                    <button type="submit" class="login-btn">登录</button>
+                    <p id="loginError" class="login-error"></p>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="registerForm" class="register-form-section hidden">
+                    <div class="login-form-group">
+                        <label for="regUsername">用户名</label>
+                        <input type="text" id="regUsername" name="regUsername" required placeholder="输入用户名">
+                    </div>
+                    <div class="login-form-group">
+                        <label for="regPassword">密码</label>
+                        <input type="password" id="regPassword" name="regPassword" required placeholder="输入密码">
+                    </div>
+                    <div class="login-form-group">
+                        <label for="regPassword2">确认密码</label>
+                        <input type="password" id="regPassword2" name="regPassword2" required placeholder="再次输入密码">
+                    </div>
+                    <button type="submit" class="login-btn">注册</button>
+                    <p id="registerError" class="login-error"></p>
+                </form>
+                
+                <!-- Toggle Links -->
+                <div class="auth-toggle">
+                    <p>
+                        <span id="toggleRegister" class="toggle-link">没有账户？注册</span>
+                    </p>
+                </div>
+                
+                <!-- Guest Login -->
+                <button type="button" id="guestBtn" class="guest-btn">访客浏览</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1>9597 26 Scouting</h1>
+                <ul class="nav-links">
+                    <li><a href="#teams">队伍总和</a></li>
+                    <li><a href="#prescouting">Prescouting</a></li>
+                    <li><a href="#scouting">Scouting</a></li>
+                    <li><a href="#profile">我的</a></li>
+                    <li><span id="userInfo" class="user-info"></span></li>
+                    <li><a href="#" id="logoutBtn">登出</a></li>
+                    <li>
+                        <div class="theme-toggle-container">
+                            <input type="checkbox" id="themeToggle" class="theme-toggle-checkbox">
+                            <label for="themeToggle" class="theme-toggle-label">
+                                <span class="theme-toggle-inner">
+                                    <span class="theme-label blue-label">蓝</span>
+                                    <span class="theme-label red-label">红</span>
+                                </span>
+                                <span class="theme-toggle-switch"></span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+                <img src="logo.png" alt="26 Scouting Logo" class="navbar-logo">
+            </div>
+        </nav>
+    </header>
+
+    <main id="mainContent" class="page-container active">
+        <section id="home" class="hero">
+            <div class="container">
+                <h2>2026 上海地区机器人竞赛</h2>
+                <p>FRC Shanghai Regional 2026</p>
+            </div>
+        </section>
+
+        <section id="teams" class="teams-section">
+            <div class="container">
+                <h2>队伍总和</h2>
+                <div class="event-info">
+                    <div class="info-card">
+                        <h3>比赛信息</h3>
+                        <p><strong>事件：</strong>Shanghai Regional 2026</p>
+                        <p><strong>日期：</strong>2026年3月12日 - 3月15日</p>
+                        <p><strong>地点：</strong>East China Normal University Minhang Campus Venue, Minhang District, Shanghai, China</p>
+                        <p><strong>队伍总数：</strong>50支队伍</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>我们的队伍</h3>
+                        <p><strong>队号：</strong>9597 Luban Robotics</p>
+                        <p><strong>所在地：</strong>Beijing, China</p>
+                    </div>
+                </div>
+                <div class="teams-list">
+                    <div class="teams-header">
+                        <h3>参赛队伍（共50支）</h3>
+                        <input type="text" id="teamSearch" class="team-search" placeholder="搜索队伍号或队伍名称...">
+                    </div>
+                    <div class="teams-grid-container">
+                        <div class="team-card">5449 Prototype</div>
+                        <div class="team-card">5515 Blue Power Robotics</div>
+                        <div class="team-card">5516 Iron Maple</div>
+                        <div class="team-card">5522 Stargazer</div>
+                        <div class="team-card">5823 ACE</div>
+                        <div class="team-card">5849 Joker</div>
+                        <div class="team-card">6304 EAGLE</div>
+                        <div class="team-card">6353 EFZ Robotics</div>
+                        <div class="team-card">6394 MITO</div>
+                        <div class="team-card">6399 Tinspiratio</div>
+                        <div class="team-card">6414 Voyager</div>
+                        <div class="team-card">6433 HZ4Z</div>
+                        <div class="team-card">6487 Clockwork Knights</div>
+                        <div class="team-card">6494 Wings of Liberty</div>
+                        <div class="team-card">6706 Golem</div>
+                        <div class="team-card">6766 AtomStorm</div>
+                        <div class="team-card">6907 The G.O.A.T</div>
+                        <div class="team-card">6940 Violet Z</div>
+                        <div class="team-card">6941 IronPulse Robotics</div>
+                        <div class="team-card">6986 PPT Bots</div>
+                        <div class="team-card">7002 风云蹦豆</div>
+                        <div class="team-card">7594 Nautilus</div>
+                        <div class="team-card">7601 Iron Phoenix</div>
+                        <div class="team-card">7738 Helion</div>
+                        <div class="team-card">8011 Kirin</div>
+                        <div class="team-card">8015 The Cheetahs</div>
+                        <div class="team-card">8214 Cyber Unicorn</div>
+                        <div class="team-card">8806 Our Lady of Providence Dream League</div>
+                        <div class="team-card">8810 The Alphabots</div>
+                        <div class="team-card">9421 Nexus</div>
+                        <div class="team-card">9597 Luban Robotics</div>
+                        <div class="team-card">9635 Cyber Rabbit</div>
+                        <div class="team-card">10000 Neutron Star</div>
+                        <div class="team-card">10016 Absolute Zero</div>
+                        <div class="team-card">10120 Wulfa the Wolf</div>
+                        <div class="team-card">10131 Royal Turtles</div>
+                        <div class="team-card">10214 Team Doritos</div>
+                        <div class="team-card">10479 Powerhouse</div>
+                        <div class="team-card">10526 Orcas</div>
+                        <div class="team-card">10541 CarbonPulse Robotics</div>
+                        <div class="team-card">10558 Forté</div>
+                        <div class="team-card">10711 FORMSHOP</div>
+                        <div class="team-card">11019 X.PLORE</div>
+                        <div class="team-card">11118 The Baybies</div>
+                        <div class="team-card">11256 Qingdao Academy</div>
+                        <div class="team-card">11288 Trident Force</div>
+                        <div class="team-card">11319 Polaris</div>
+                        <div class="team-card">11328 SIA</div>
+                        <div class="team-card">11352 Flying Tiger</div>
+                        <div class="team-card">11485 Bestarian NextGEN</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="prescoutingPage" class="page-container">
+        <section id="prescouting" class="prescouting-section">
+            <div class="container">
+                <h2>Prescouting问卷</h2>
+                <div class="prescouting-form-container">
+                    <form id="prescoutingForm" class="prescouting-form">
+                        <div class="form-group">
+                            <label for="teamNumber">队伍号 *</label>
+                            <input type="number" id="teamNumber" name="teamNumber" required placeholder="输入队伍号">
+                        </div>
+                        <div class="form-group">
+                            <label for="teamName">队伍名称</label>
+                            <input type="text" id="teamName" name="teamName" placeholder="队伍名称" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="coachTime">操作手练习时长</label>
+                            <input type="text" id="coachTime" name="coachTime" placeholder="例如：3个月、1年">
+                        </div>
+                        <div class="form-group">
+                            <label for="competitionCount">操作手参加比赛次数</label>
+                            <input type="number" id="competitionCount" name="competitionCount" placeholder="输入次数" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="chassisType">机器底盘种类 *</label>
+                            <select id="chassisType" name="chassisType" required>
+                                <option value="">--请选择--</option>
+                                <option value="Swerve">Swerve（轮组）</option>
+                                <option value="Tank">Tank（坦克）</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rampChoice">走斜坡还是下面 *</label>
+                            <select id="rampChoice" name="rampChoice" required>
+                                <option value="">--请选择--</option>
+                                <option value="斜坡">斜坡</option>
+                                <option value="下面">下面</option>
+                                <option value="都可">都可</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shooterCount">有几个发射通道</label>
+                            <input type="number" id="shooterCount" name="shooterCount" placeholder="输入发射通道数" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="climbLevel">能够爬升至（0-3）</label>
+                            <select id="climbLevel" name="climbLevel">
+                                <option value="">--请选择--</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="maxBalls">最大储球量</label>
+                            <input type="number" id="maxBalls" name="maxBalls" placeholder="输入最大储球量" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="shootTime">满仓发射时长（秒）</label>
+                            <input type="number" id="shootTime" name="shootTime" placeholder="输入发射时长" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="startingPosition">起始位置</label>
+                            <textarea id="startingPosition" name="startingPosition" placeholder="描述机器起始位置"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="manualStrategy">手动策略</label>
+                            <textarea id="manualStrategy" name="manualStrategy" placeholder="描述手动策略"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="robotFunction">功能/位置 *</label>
+                            <select id="robotFunction" name="robotFunction" required>
+                                <option value="">--请选择--</option>
+                                <option value="Feeder">Feeder（往回给球的）</option>
+                                <option value="Shooter">Shooter（往hub里面打的）</option>
+                                <option value="Defense">干扰（疯狗）</option>
+                                <option value="Other">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="otherFunctionGroup" style="display:none;">
+                            <label for="otherFunction">其他功能/位置</label>
+                            <input type="text" id="otherFunction" name="otherFunction" placeholder="请填写其他功能/位置">
+                        </div>
+                        <div class="form-group">
+                            <label for="autoScore">自动程序得分</label>
+                            <textarea id="autoScore" name="autoScore" placeholder="例如：跑线xx分"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="autoAccuracy">自动准确率</label>
+                            <input type="text" id="autoAccuracy" name="autoAccuracy" placeholder="例如：xx%">
+                        </div>
+                        <div class="form-group">
+                            <label for="autoClimb">自动是否爬升</label>
+                            <select id="autoClimb" name="autoClimb">
+                                <option value="">--请选择--</option>
+                                <option value="是">是</option>
+                                <option value="否">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="strategyOverview">策略概述</label>
+                            <textarea id="strategyOverview" name="strategyOverview" placeholder="总体战术和得分策略概述"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">备注</label>
+                            <textarea id="notes" name="notes" placeholder="输入其他观察到的信息"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="manualAccuracy">手动发射准确率</label>
+                            <input type="text" id="manualAccuracy" name="manualAccuracy" placeholder="例如：xx%">
+                        </div>
+                        <div class="form-group">
+                            <label for="teamPhoto">上传队伍照片</label>
+                            <input type="file" id="teamPhoto" name="teamPhoto" accept="image/*">
+                            <div id="photoPreview" class="photo-preview"></div>
+                        </div>
+                        <button type="submit" class="btn-submit">保存问卷</button>
+                    </form>
+                    <div id="prescoutingData" class="prescouting-data"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="scoutingPage" class="page-container">
+        <section id="scouting" class="scouting-section">
+            <div class="container">
+                <h2>Scouting</h2>
+                <p>侦察数据将显示在这里</p>
+            </div>
+        </section>
+    </div>
+
+    <div id="profilePage" class="page-container">
+        <section id="profile" class="profile-section">
+            <div class="container">
+                <h2>我的</h2>
+                <div id="profileContent" class="profile-content">
+                    <!-- Profile content will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 26 Scouting. 保留所有权利。</p>
+                <img src="logo.png" alt="26 Scouting Logo" class="footer-logo">
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
